@@ -156,9 +156,9 @@ export default class Order extends React.Component {
               <div className="order-basket__item-list">
                 {
                   this.props.products.map(product => {
-                    if (!this.state) return (<React.Fragment key={`${product.id}-${product.size}`}></React.Fragment>);
+                    if (!this.state) return (<React.Fragment key={`${product.id}-${product.size}`}/>);
                     if (!this.state[product.id]) {
-                      return (<React.Fragment key={`${product.id}-${product.size}`}></React.Fragment>);
+                      return (<React.Fragment key={`${product.id}-${product.size}`}/>);
                     }
 
                     return (
@@ -166,7 +166,8 @@ export default class Order extends React.Component {
                         <Link to={{pathname: `/product/${product.id}`}}>
                           <div className="basket-item__pic">
                             <img src={this.state[product.id] ? this.state[product.id].images[0] : "#"}
-                                 alt={this.state[product.id].title}/>
+                                 alt={this.state[product.id].title}
+                                 style={{height: "100%",}}/>
                           </div>
                         </Link>
                         <div className="basket-item__product">
@@ -201,7 +202,7 @@ export default class Order extends React.Component {
               </div>
             </div>
             <div className="order-process__confirmed">
-              <form onSubmit={this.handlerForm} >
+              <form onSubmit={this.handlerForm}>
                 <div className="order-process__delivery">
                   <h3 className="h3">кому и куда доставить?</h3>
                   <div className="order-process__delivery-form">
