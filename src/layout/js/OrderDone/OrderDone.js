@@ -61,7 +61,7 @@ export default class OrderDone extends React.Component {
               </div>
             </div>
             <p className="order-done__notice">Данные о заказе отправлены на адрес
-              <span>{this.props.location.state.formField.userEmail}. </span>
+              <span> {this.props.location.state.formField.userEmail}. </span>
             </p>
             <button className="order-done__continue" onClick={this.handlerButton}>продолжить покупки</button>
           </section>
