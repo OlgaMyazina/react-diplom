@@ -7,6 +7,7 @@ import OverlookedSlider from "../OverlookedSlider/OverlookedSlider";
 import Pagination from "../Pagination/Pagination";
 import ProductList from "../ProductList/ProductList";
 import {CategoriesContext} from "../App";
+import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 
 const {Provider, Consumer} = React.createContext();
@@ -176,6 +177,7 @@ export default class Catalog extends Component {
     return (
       <>
         {/*<!-- Каталог товаров -->*/}
+        <ScrollToTop>
         {/*<!-- Breadcrumbs -->*/}
         <CategoriesContext.Consumer>
           {(categories) =>
@@ -222,6 +224,7 @@ export default class Catalog extends Component {
         </main>
         {/*<!-- Слайдер внизу каталога  -->*/}
         <OverlookedSlider/>
+        </ScrollToTop>
       </>
     )
   }

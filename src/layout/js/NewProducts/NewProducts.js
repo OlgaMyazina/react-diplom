@@ -82,11 +82,14 @@ export default class NewProducts extends React.Component {
 
   isFavorite = (productId) => {
     const returnObj = JSON.parse(localStorage.getItem("products"));
+    if (!returnObj) {
+      return false;
+    }
     const existElement = returnObj.products.findIndex(element => {
       return element.id === productId;
     });
 
-    return existElement!==-1 ? true : false
+    return existElement !== -1 ? true : false
   };
 
 

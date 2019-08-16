@@ -12,6 +12,7 @@ import Favorite from "./Favorite/Favorite";
 import About from "./About/About";
 import Cart from "./Cart/Cart";
 import OrderDone from "./OrderDone/OrderDone";
+import ScrollToTop from "./ScrollToTop/ScrollToTop";
 //import ProductComponent from "./ProductComponent/ProductComponent";
 
 export const CategoriesContext = React.createContext({
@@ -122,30 +123,33 @@ export default class App extends Component {
   render() {
     return (
       <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <ScrollToTop>
+
         <CategoriesContext.Provider value={this.state}>
           <HeaderComponent onRemoveFromCart={this.handlerRemoveFromCart} products={this.state.products}/>
+            <Switch>
+              <Route exact path="/" component={Home}/>
+              <Route path="/cart" render={(props) => (<Cart {...props} products={this.state.products}/>)}/>
+              <Route path="/product/:id?" render={(props) => (
+                <Product {...props} onAddToCart={this.handlerAddToCart}/>
+              )}/>
+              <Route path="/catalog/:id?" render={(props) => (
+                <Catalog {...props} />
+              )}/>
+              <Route path="/productlist" component={ProductList}/>
+              <Route path="/order" component={(props) => (<Order {...props}
+                                                                 products={this.state.products}
+                                                                 onAdd={this.handlerAddToCart}
+                                                                 onRemove={this.handlerRemoveFromCart}/>)}/>
+              <Route path="/orderdone" component={OrderDone}/>
+              <Route path="/favorite" component={Favorite}/>
+              <Route path="/about" component={About}/>
 
-          <Switch>
-            <Route exact path="/" component={Home}/>
-            <Route path="/cart" render={(props) => (<Cart {...props} products={this.state.products}/>)}/>
-            <Route path="/product/:id?" render={(props) => (
-              <Product {...props} onAddToCart={this.handlerAddToCart}/>
-            )}/>
-            <Route path="/catalog/:id?" render={(props) => (
-              <Catalog {...props} />
-            )}/>
-            <Route path="/productlist" component={ProductList}/>
-            <Route path="/order" component={(props) => (<Order {...props}
-                                                               products={this.state.products}
-                                                               onAdd={this.handlerAddToCart}
-                                                               onRemove={this.handlerRemoveFromCart}/>)}/>
-            <Route path="/orderdone" component ={OrderDone}/>
-            <Route path="/favorite" component={Favorite}/>
-            <Route path="/about" component={About}/>
-
-          </Switch>
+            </Switch>
           <Footer/>
         </CategoriesContext.Provider>
+        </ScrollToTop>
+
       </BrowserRouter>
     )
   }
