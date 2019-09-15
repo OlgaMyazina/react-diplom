@@ -82,7 +82,8 @@ export default class OverlookedSlider extends React.Component {
             return (
               <div className={`overlooked-slider__item overlooked-slider__item-${index}`} key={product.id}>
                 <Link to={`/product/${product.id}`}>
-                  <img src={product ? (product.images.length >= 1 ? product.images[0] : "#") : "#"}
+                  {console.log("overlooked img product", product.image)}
+                  <img src={product.image ? (product.images.length >= 1 ? product.images[0] : "#") : "#"}
                        alt={`${product.title}`} style={{width: "100%", height: "100%"}}/>
                 </Link>
               </div>

@@ -635,6 +635,7 @@ li.active {
   display: flex;
   border-radius: 10px;
   background: #F4F4F4;
+  overflow: auto;
 }
 
 .sidebar ul li {
