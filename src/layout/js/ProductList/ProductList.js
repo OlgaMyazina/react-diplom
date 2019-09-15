@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {FavoriesContext} from "../App";
 
 const styleComponent = {
   height: '100%',
@@ -12,39 +13,14 @@ export default class ProductList extends React.Component {
   }
 
   componentDidMount() {
-    this.props.products.map(product => this.getProduct(product.id))
+    this.props.products.map(product => this.getProduct(product.id));
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.products !== this.props.products) {
-      this.props.products.map(product => this.getProduct(product.id))
+      this.props.products.map(product => this.getProduct(product.id));
     }
   }
-
-  handlerFavoriteClick = (product, event) => {
-    event.preventDefault();
-    //получаем значения из хранилица
-    const returnObj = JSON.parse(localStorage.getItem("products"));
-    if (!returnObj) {
-      const productsList = {
-        products: []
-      };
-      productsList.products.push(product);
-      localStorage.setItem("products", JSON.stringify(productsList));
-      return;
-    }
-    const existElement = returnObj.products.findIndex(element => {
-      return element.id === product.id;
-    });
-    if (existElement === -1) {
-      returnObj.products.push(product);
-      localStorage.setItem("products", JSON.stringify(returnObj));
-    } else {
-      localStorage.removeItem("products");
-      returnObj.products.splice(existElement, 1);
-      localStorage.setItem("products", JSON.stringify(returnObj));
-    }
-  };
 
   getProduct = (id) => {
     const params = {
@@ -63,7 +39,6 @@ export default class ProductList extends React.Component {
 
   render() {
 
-
     if (!this.props.products) return (<></>);
     return (
       <>
@@ -71,18 +46,26 @@ export default class ProductList extends React.Component {
         {this.props.products.map((product, index) => {
           return (
             <Link to={`/product/${product.id}`} className="item-list__item-card item" key={product.id}>
-              <div className="item-pic">
-                <img className={`item-pic-${index + 1}`}
-                     src={product.images[0]}
-                     alt={product.title}
-                     style={styleComponent}/>
-                <div className="product-catalogue__product_favorite"
-                     onClick={(event) => this.handlerFavoriteClick(product, event)}>
-                  <p/>
-                </div>
-                <div className="arrow arrow_left"/>
-                <div className="arrow arrow_right"/>
-              </div>
+              <FavoriesContext.Consumer>
+                {({isFavorite, toggleFavorite}) => {
+                  return (
+                    <div className="item-pic">
+                      <img className={`item-pic-${index + 1}`}
+                           src={product.images[0]}
+                           alt={product.title}
+                           style={styleComponent}/>
+                      <div
+                        className={isFavorite(product.id) ? "product-catalogue__product_favorite-chosen" : "product-catalogue__product_favorite"}
+                        onClick={(event) => toggleFavorite(product.id, event)}>
+                        <p/>
+                      </div>
+                      <div className="arrow arrow_left"/>
+                      <div className="arrow arrow_right"/>
+                    </div>
+                  )
+                }
+                }
+              </FavoriesContext.Consumer>
               <div className="item-desc">
                 <h4 className="item-name">{product.title}</h4>
                 <p className="item-producer">Производитель: <span className="producer">{product.brand}</span></p>

@@ -35,10 +35,11 @@ const Search = ({history, ...rest}) => {
   return (
     <>
       <form className={`header-main__search ${rest.isSearchActive}`} onSubmit={handlerSubmit}>
-        <i className="fa fa-search" aria-hidden="true"></i>
         <input placeholder="Поиск" name="search">
 
         </input>
+        <i className="fa fa-search" aria-hidden="true"></i>
+
       </form>
 
 

@@ -145,17 +145,30 @@ export default class Sidebar extends React.Component {
   };
   handlerSizeChecked = (event) => {
     const filters = urlToFilter(this.props.location.search);
-    filters.size.push(event.target.name);
+    const indexSizeFilters = filters.size.findIndex(elem => parseInt(elem) === parseInt(event.target.name));
+    if (indexSizeFilters === -1) {
+      filters.size.push(parseInt(event.target.name));
+    } else {
+      //todo: удаляем элемент из массива объектов, снимаем флаг и убираем из url
+      filters.size.splice(indexSizeFilters, 1);
+    }
     const url = this.getUrl("size", filters.size);
     this.props.history.push(url);
   };
 
   handlerHeelSizeChecked = (event) => {
+    console.log("click heelSize");
     const filters = urlToFilter(this.props.location.search);
-    filters.heelSize.push(event.target.name);
-    const url = this.getUrl("heelSize", filters.size);
+    const indexHeelSizeFilters = filters.heelSize.findIndex(elem => parseInt(elem) === parseInt(event.target.name));
+    if (indexHeelSizeFilters === -1) {
+      filters.heelSize.push(parseInt(event.target.name));
+    } else {
+      //todo: удаляем элемент из массива объектов, снимаем флаг и убираем из url
+      filters.heelSize.splice(indexHeelSizeFilters, 1);
+    }
+    const url = this.getUrl("heelSize", filters.heelSize);
     this.props.history.push(url);
-  }
+  };
 
   handlerOpenerClick = (param) => {
     this.setState({[`${param}DivisionOpen`]: !this.state[`${param}DivisionOpen`]});
@@ -328,7 +341,7 @@ export default class Sidebar extends React.Component {
                         <input type="checkbox"
                                className="checkbox"
                                name={heelSizeElement}
-                               onChange={this.handlerSizeChecked}
+                               onChange={this.handlerHeelSizeChecked}
                                checked={this.parseUrl("heelSize", heelSizeElement)}/>
                         <span className="checkbox-custom"/> <span className="label"> {heelSizeElement}</span>
                       </label>

@@ -1,11 +1,15 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
+import FavoriteImage from "../../img/product-card-pics/product-card__favorite.png";
+import FavoriteImageFill from "../../img/product-card-pics/product-card__favorite-fill.png";
+
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import ProductImagesSlider from "../ProductImagesSlider/ProductImagesSlider";
 import {CategoriesContext} from "../App";
 import OverlookedSlider from "../OverlookedSlider/OverlookedSlider";
 import SimilarSlider from "../SimilarSlider/SimilarSlider";
+import {FavoriesContext} from "../App";
 
 /*
 * {
@@ -115,19 +119,6 @@ export default class Product extends React.Component {
     if (prevProps.location.pathname !== this.props.location.pathname) {
       this.getProduct();
     }
-
-
-    /*console.log(this.props, prevProps);
-    console.log(this.state, prevState);
-    if ((prevProps == this.props) && (prevState == this.state)) {
-      return;
-    }
-    this.getProduct();
-    console.log(this.state);
-
-    this.getBasketName=()=>{
-      return this.state.currentSize ? "В корзину" : "Выберите размер!"
-    }*/
   }
 
 
@@ -282,10 +273,17 @@ export default class Product extends React.Component {
                 <div className="size-wrapper" style={{left: "105px"}} key="productSizes">
                   <a href="#"><span className="size-rule"/><p className="size-table">Таблица размеров</p></a>
                 </div>
-                <a href="#" className="in-favourites-wrapper">
-                  <div className="favourite" onClick={(event) => this.handlerFavourite(event)}/>
-                  <p className="in-favourites">В избранное</p>
-                </a>
+                <FavoriesContext.Consumer>
+                  {({isFavorite, toggleFavorite}) => {
+                    return (
+                      <a href="#" className="in-favourites-wrapper">
+                        <div className={isFavorite(this.state.product.id) ? "favourite favourite-fill": "favourite favourite-empty"}
+                             onClick={(event) => toggleFavorite(this.state.product.id, event)}/>
+                        <p className="in-favourites">В избранное</p>
+                      </a>
+                    )
+                  }}
+                </FavoriesContext.Consumer>
                 <div className="basket-item__quantity" key="productBasket">
                   <div key="iconMinus" className="basket-item__quantity-change basket-item-list__quantity-change_minus"
                        onClick={this.handlerMinus}>-
@@ -313,7 +311,7 @@ export default class Product extends React.Component {
          Блок «Вы смотрели», где выводятся все товары (но не больше 10), страницы которых посетил пользователь во время текущей сессии. Если товаров 5 или меньше, то стрелочки «Назад» и «Вперёд» не отображаются. Если пользователь не смотрел никаких товаров, то блок не отображается.
          Блок «Похожие товары», где выводятся товары, чей Тип и Цвет совпадают с Типом и Цветом текущего товара. Если похожих товаров нет, то блок не отображается. Если товаров 3 или меньше, то стрелочки «Назад» и «Вперёд» не отображаются.
          */}
-         <OverlookedSlider/>
+        <OverlookedSlider/>
 
         {/*<!-- Слайдер "Похожие товары" -->*/}
         <SimilarSlider productType={this.state.product.type} productColor={this.state.productColor}/>

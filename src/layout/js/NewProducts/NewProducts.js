@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {CategoriesContext} from "../App";
+import {CategoriesContext, FavoriesContext} from "../App";
 import CategoryNewProducts from "../CategoryNewProducts/CategoryNewProducts";
 import SliderNewProducts from "../SliderNewProducts/SliderNewProducts";
 
@@ -111,13 +111,18 @@ export default class NewProducts extends React.Component {
           }
           }
         </CategoriesContext.Consumer>
-        <SliderNewProducts products={this.getProducts()}
-                           onFavoriteClick={(product, event) => {
-                             this.handlerFavoriteClick(product, event)
-                           }}
-                           isFavorite={(productId) => {
-                             return this.isFavorite(productId)
-                           }}/>
+        <FavoriesContext.Consumer>
+          {(isFavorite, toggleFavorite) => {
+            return (
+
+              <SliderNewProducts products={this.getProducts()}
+                                 onFavoriteClick={(product, event) => {
+                                   toggleFavorite(product.id, event)
+                                 }}
+                                 isFavorite={productId => isFavorite(productId)}/>
+            )
+          }}
+        </FavoriesContext.Consumer>
       </section>
 
     )

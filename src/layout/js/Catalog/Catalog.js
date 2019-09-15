@@ -178,52 +178,52 @@ export default class Catalog extends Component {
       <>
         {/*<!-- Каталог товаров -->*/}
         <ScrollToTop>
-        {/*<!-- Breadcrumbs -->*/}
-        <CategoriesContext.Consumer>
-          {(categories) =>
-            <Breadcrumbs item={this.props.isMainMenuActive}{...this.props} categories={categories}/>
-          }
-        </CategoriesContext.Consumer>
-        {/*<!-- Тело каталога с сайдбаром -->*/}
-        <main className="product-catalogue">
-          {/*<!-- Сайдбар -->*/}
-          <SidebarComponents {...this.state} {...this.props}/>
-          {/*<!-- Основной контент каталога -->*/}
-          <section className="product-catalogue-content">
-            {/*<!-- Голова каталога с названием раздела и сортировкой -->*/}
-            <section className="product-catalogue__head">
-              <div className="product-catalogue__section-title">
-                <h2 className="section-name">{this.getHeader()}</h2>
-                <span
-                  className="amount">{this.state.products ? (this.state.products.goods ? `${this.state.products.goods} товаров` : "") : ""}</span>
-              </div>
-              <div className="product-catalogue__sort-by">
-                <p className="sort-by">Сортировать</p>
-                <select name="" value={this.state.sort} id="sorting" onChange={this.handleSort}>
-                  <option value="popularity">по популярности</option>
-                  <option value="price">по цене</option>
-                </select>
+          {/*<!-- Breadcrumbs -->*/}
+          <CategoriesContext.Consumer>
+            {(categories) =>
+              <Breadcrumbs item={this.props.isMainMenuActive}{...this.props} categories={categories}/>
+            }
+          </CategoriesContext.Consumer>
+          {/*<!-- Тело каталога с сайдбаром -->*/}
+          <main className="product-catalogue" style={{width: "100%",}}>
+            {/*<!-- Сайдбар -->*/}
+            <SidebarComponents {...this.state} {...this.props}/>
+            {/*<!-- Основной контент каталога -->*/}
+            <section className="product-catalogue-content">
+              {/*<!-- Голова каталога с названием раздела и сортировкой -->*/}
+              <section className="product-catalogue__head">
+                <div className="product-catalogue__section-title">
+                  <h2 className="section-name">{this.getHeader()}</h2>
+                  <span
+                    className="amount">{this.state.products ? (this.state.products.goods ? `${this.state.products.goods} товаров` : "") : ""}</span>
+                </div>
+                <div className="product-catalogue__sort-by">
+                  <p className="sort-by">Сортировать</p>
+                  <select name="" value={this.state.sort} id="sorting" onChange={this.handleSort}>
+                    <option value="popularity">по популярности</option>
+                    <option value="price">по цене</option>
+                  </select>
+                </div>
+              </section>
+              {/*<!-- Список товаров каталога -->*/}
+              {/*<!-- Товары -->*/}
+              <section className="product-catalogue__item-list">
+
+                <ProductList products={this.state.products ? this.state.products.data : []}/>
+              </section>
+
+
+              {/*<!-- Пагинация под каталогом -->*/}
+              <div className="product-catalogue__pagination">
+                <Pagination page={this.state.products ? this.state.products.page : ""}
+                            pages={this.state.products ? this.state.products.pages : ""}
+                            onChange={this.handlePage}
+                />
               </div>
             </section>
-            {/*<!-- Список товаров каталога -->*/}
-            {/*<!-- Товары -->*/}
-            <section className="product-catalogue__item-list">
-
-              <ProductList products={this.state.products ? this.state.products.data : []}/>
-            </section>
-
-
-            {/*<!-- Пагинация под каталогом -->*/}
-            <div className="product-catalogue__pagination">
-              <Pagination page={this.state.products ? this.state.products.page : ""}
-                          pages={this.state.products ? this.state.products.pages : ""}
-                          onChange={this.handlePage}
-              />
-            </div>
-          </section>
-        </main>
-        {/*<!-- Слайдер внизу каталога  -->*/}
-        <OverlookedSlider/>
+          </main>
+          {/*<!-- Слайдер внизу каталога  -->*/}
+          <OverlookedSlider/>
         </ScrollToTop>
       </>
     )
