@@ -259,12 +259,18 @@ li.active {
   color: #333333;
 }
 
-.favourite {
+.favourite{
   display: inline-block;
   width: 30px;
   height: 30px;
   vertical-align: top;
+}
+
+.favourite-empty {
   background: url(../img/product-card-pics/product-card__favorite.png) no-repeat;
+}
+.favourite-fill {
+  background: url(../img/product-card-pics/product-card__favorite-fill.png) no-repeat;
 }
 
 /*Счётчик для корзины*/

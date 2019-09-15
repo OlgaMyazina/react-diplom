@@ -341,7 +341,7 @@ export default class Sidebar extends React.Component {
                         <input type="checkbox"
                                className="checkbox"
                                name={heelSizeElement}
-                               onChange={this.handlerSizeChecked}
+                               onChange={this.handlerHeelSizeChecked}
                                checked={this.parseUrl("heelSize", heelSizeElement)}/>
                         <span className="checkbox-custom"/> <span className="label"> {heelSizeElement}</span>
                       </label>
