@@ -8,4 +8,4 @@ const SearchComponent = withFetcher({
   collName: 'search'
 })(Search);
 
-export default CategoriesComponent;
+export default SearchComponent;
